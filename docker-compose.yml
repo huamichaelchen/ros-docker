@@ -24,3 +24,13 @@ services:
       - "ROS_MASTER_URI=http://master:11311"
     command: rosrun roscpp_tutorials listener
     #command: rostopic echo my_topic
+
+  tester:
+    build: .
+    container_name: tester
+    environment:
+      - "ROS_HOSTNAME=tester"
+      - "ROS_MASTER_URI=http://master:11311"
+    volumes: 
+      - ./roschecker.sh:/roschecker.sh
+    command: rostopic pub -r 10 /test std_msgs/String Bonjour
